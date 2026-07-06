@@ -6,9 +6,8 @@ class Solution(object):
         :rtype: List[int]
         """
         h = {}
-        for i in range(len(nums)):
-            h[nums[i]] = i
         
-        for i in range(len(nums)):
-            if target - nums[i] in h and h[target-nums[i]] != i:
+        for i,num in enumerate(nums):
+            if target - num in h:
                 return [i, h[target-nums[i]]]
+            h[num] = i
