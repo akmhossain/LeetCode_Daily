@@ -9,16 +9,19 @@ class Solution(object):
         :type head: Optional[ListNode]
         :rtype: Optional[ListNode]
         """
-        # reverse the arrows
-        c = head
-        p = None
+        curr = head
+        prev = None
 
-        while c:
-            temp = c.next # store next so we dont lose the list
-            c.next = p # reverses arrow
-            # move pointers forward
-            p = c 
-            c = temp
+        while curr:
+            # temp = None
+            temp = curr.next
+            # next = None
+            curr.next = prev
+            # prev = 1
+            prev = curr
+            # None
+            curr = temp
         
-        return p
+        return prev
+
  
