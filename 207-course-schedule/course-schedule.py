@@ -11,24 +11,20 @@ class Solution:
         for a,b in prerequisites: 
             course_graph[b].append(a) 
 
-        # states and dfs
-        # unseen, visiting, visited 
-        unseen = 0
-        visited = 1
-        visiting = 2
-        states = [unseen] * numCourses # list used to keep track of course states
-        def dfs(node):
-            state = states[node]
-            if state == visited : return True
-            if state == visiting : return False # loop detected 
+        # dfs to detect cycles
+        # unseen - 0, visiting - 1, visited - 2 
+        state = [0] * numCourses
+        def dfs(node): 
+            if state[node] != 0: 
+                return state[node] == 2
 
-            states[node] = visiting
+            state[node] = 1
 
-            for adj_node in course_graph[node]:
-                if not dfs(adj_node):
+            for nei in course_graph[node]:
+                if not dfs(nei):
                     return False
-            
-            states[node] = visited
+
+            state[node] = 2
             return True
         
         # actual loop to trigger dfs
