@@ -12,7 +12,7 @@ class Solution:
         if not root:
             return 0
         
-        def dfs(node, max_val):
+        def dfs(node, max_val): # node, max_val are local, changes every call
             res = 0
             # base case
             if not node:
@@ -23,8 +23,10 @@ class Solution:
                 res += 1
                 max_val = node.val
 
-            res += dfs(node.left, max_val) + dfs(node.right, max_val) 
-            return res
+            l = dfs(node.left, max_val) 
+            r = dfs(node.right, max_val) 
+
+            return res + l + r
 
         return dfs(root, root.val)
             
