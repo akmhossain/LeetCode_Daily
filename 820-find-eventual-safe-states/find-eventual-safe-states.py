@@ -8,22 +8,21 @@ class Solution:
         # solution: dfs
         # for each node: dfs each element in the list, false if in cycle 
 
-        unseen = 0
-        visited = 1
-        visiting = 2
-        states = [unseen] * len(graph) # list used to keep track of node states
-        def dfs(node):
-            state = states[node]
-            if state == visited : return True
-            if state == visiting : return False # loop detected 
+        n = len(graph)
+        state = [0] * n
 
-            states[node] = visiting
+        def dfs(node): # detect cycles
+            if state[node] != 0: # if visited or visiting
+                return state[node] == 2 # if visiting(1) then false: cycle
 
-            for adj_node in graph[node]:
-                if not dfs(adj_node):
+            state[node] = 1 # mark node visiting
+
+            for nei in graph[node]: # executes on unseen nodes
+                if not dfs(nei):
                     return False
-            
-            states[node] = visited
+
+            # mark visited and return true (no cycle detected)
+            state[node] = 2
             return True
         
         res = []
