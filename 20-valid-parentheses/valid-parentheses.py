@@ -4,19 +4,34 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-        if len(s) % 2 != 0:
+        # stack is empty & closing bracket - false
+        # opening bracket doesnt match closing (dict needed)
+        # extra brakets at the end ()[
+
+        if len(s) % 2 == 1:
             return False
         
-        h = {')':'(', '}':'{', ']':'['}
         stk = []
-
+        h = {'}':'{', ')':'(', ']':'['}
+        
         for c in s:
+            # if the char is closing bracket
             if c in h:
-                if not stk or stk[-1] != h[c]:
+                if not stk:
                     return False
-                stk.pop()
+                if stk[-1] != h[c]:
+                    return False
+                else:
+                    stk.pop()
+            # if char is opening
             else:
                 stk.append(c)
         
         return not stk
-                
+
+        
+
+
+
+
+       
