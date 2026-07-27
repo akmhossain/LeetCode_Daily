@@ -194,12 +194,16 @@ def deep_map(f, s: list) -> list:
     >>> s3 is s2[1]
     True
     """
-    if not s:
-        return
-    if type(s[0]) == list:
-        deep_map(f, s[0])
-    s[0] = f(s[0]) 
-    deep_map(f, s[1:])
+    def helper(s, curr):
+        if curr == len(s):
+            return # stop recursion at list end
+        if type(s[curr]) == list:
+            return helper(s[curr], 0) # go deeper if list
+        else:
+            s[curr] = f(s[curr]) # if not list and not end then modify
+        return helper(s, curr + 1) # iterate to next element
+
+    helper(s, 0)
 
 
 def next_larger_dollar(bill: int) -> int:
@@ -235,5 +239,15 @@ def count_dollars_upward(sum_needed: int) -> int:
     >>> check(SOURCE_FILE, 'count_dollars_upward', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def counting(curr_sum, smallest):
+        if curr_sum == 0:
+            return 1
+        elif curr_sum < 0:
+            return 0
+        elif smallest is None:
+            return 0
+
+        return (counting(curr_sum - smallest, smallest) + counting(curr_sum, next_larger_dollar(smallest)))
+
+    return counting(sum_needed, 1)
 
