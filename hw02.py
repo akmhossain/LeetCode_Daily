@@ -129,7 +129,20 @@ def count_dollars(sum_needed: int) -> int:
     >>> check(SOURCE_FILE, 'count_dollars', ['While', 'For'])
     True
     """
-    "*** YOUR CODE HERE ***"
+    def counting(curr_sum, largest):
+        if curr_sum == 0:
+            return 1
+        elif curr_sum < 0:
+            return 0
+        elif largest == None:
+            return 0
+
+        # return count_partitions(n-m, m) + count_partitions(n, m-1)
+        # the number of ways to partition n-m using integers up to m, and
+        # the number of ways to partition n using integers up to m-1.
+        return counting(curr_sum - largest, largest) + counting(curr_sum, next_smaller_dollar(largest))
+    
+    return counting(sum_needed, 100)
 
 
 def shuffle(s: list) -> list:
@@ -146,8 +159,18 @@ def shuffle(s: list) -> list:
     ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']
     """
     assert len(s) % 2 == 0, 'len(seq) must be even'
-    "*** YOUR CODE HERE ***"
 
+    # [1 2 3 4] -- [1 2] [3 4] + merge([2], [4]) -- [2] [4] + merge([], []) 
+    # return [] -- [1 3] + [2 4]
+    def merge(l1,l2):
+        if not l1:
+            return []
+        return [l1[0], l2[0]] + merge(l1[1:], l2[1:])
+    
+    half = len(s) // 2
+    l1, l2 = s[:half], s[half:]
+    
+    return merge(l1,l2)
 
 def deep_map(f, s: list) -> list:
     """Replace all non-list elements x with f(x) in the nested list s.
@@ -171,7 +194,12 @@ def deep_map(f, s: list) -> list:
     >>> s3 is s2[1]
     True
     """
-    "*** YOUR CODE HERE ***"
+    if not s:
+        return
+    if type(s[0]) == list:
+        deep_map(f, s[0])
+    s[0] = f(s[0]) 
+    deep_map(f, s[1:])
 
 
 def next_larger_dollar(bill: int) -> int:
