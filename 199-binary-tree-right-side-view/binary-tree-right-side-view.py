@@ -9,9 +9,12 @@ class Solution:
         # BFS solution, right-most element before moving onto next level
         # OR post-order DFS
 
+        # BFS copied from leetcode 102 lvl order traversal: output is list of level lists
+        # e.g. [[1], [2,3]]
+
         if not root:
             return []
-
+        
         dq = deque([root]) # contains reference to node
         bfs = [] # contains node values
         while dq:
@@ -28,7 +31,6 @@ class Solution:
 
             bfs.append(lvl)
         
-        # copied from leetcode 102 lvl order traversal: output is list of level lists
-        # e.g. [[1], [2,3]]
+       
             
         return [lvl[-1] for lvl in bfs]
