@@ -36,8 +36,8 @@ class BrowserHistory:
        
         
 # Time complexity:
-# visit - O(1) since it just changes pointer direction
-# back/forward: O(n) at worst its possible to traverse entire list
+# visit - O(n) since slicing operation creates a new list everytime, worst case copies entire list
+# back/forward: O(1) at worst since all elements already indexed
 
 # Your BrowserHistory object will be instantiated and called as such:
 # obj = BrowserHistory(homepage)
