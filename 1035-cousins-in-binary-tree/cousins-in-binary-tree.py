@@ -11,10 +11,8 @@ class Solution:
                 return None 
             if node.val == target: 
                 return (parent, depth) 
-            left = dfs(node.left, node, depth + 1, target) 
-            if left: 
-                return left 
-            return dfs(node.right, node, depth + 1, target) 
+                
+            return dfs(node.left, node, depth + 1, target) or dfs(node.right, node, depth + 1, target) 
         
         x_info = dfs(root, None, 0, x) 
         y_info = dfs(root, None, 0, y) # Same depth, different parents 
