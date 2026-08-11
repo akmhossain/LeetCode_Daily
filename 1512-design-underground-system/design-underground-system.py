@@ -1,18 +1,16 @@
-from collections import defaultdict
 class UndergroundSystem:
     # invariant that atleast one customer has travelled the route before getavgtime, time is chronological, customer is checked into one place at a time
     # double hash map solution 
     # checked_in: id --> [stationName, time] 
     # totals: route[start, end] --> totalTime, count
     def __init__(self):
-        self.checked_in = defaultdict(list)
+        self.checked_in = {}
         self.totals = {}
 
     def checkIn(self, id: int, stationName: str, t: int) -> None:
         if id in self.checked_in: # already checked in
             return
-        else:
-            self.checked_in[id] = [stationName, t]
+        self.checked_in[id] = [stationName, t]
 
     def checkOut(self, id: int, stationName: str, t: int) -> None:
         # retrieve station name and entry time
