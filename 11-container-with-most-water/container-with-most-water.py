@@ -4,7 +4,7 @@ class Solution:
         # choose the bigger bar 
         l,r = 0,len(height)-1
         res = 0
-        while l < r+1:
+        while l < r:
             area = min(height[l], height[r]) * (r-l)
             res = max(res, area)
             if height[l] > height[r]:
