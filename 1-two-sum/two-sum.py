@@ -5,9 +5,12 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        h = {}
+        m = {}
         
         for i,num in enumerate(nums):
-            if target - num in h:
-                return [i, h[target-nums[i]]]
-            h[num] = i
+            if target - num in m:
+                return [i, m[target-nums[i]]]
+            m[num] = i
+
+        # 2 7 11 15, tar = 9
+        {2:0, 7:1}
