@@ -4,33 +4,30 @@
 #         self.val = val
 #         self.left = left
 #         self.right = right
+from collections import deque
+
 class Solution:
     def rightSideView(self, root: Optional[TreeNode]) -> List[int]:
         # BFS solution, right-most element before moving onto next level
-        # OR post-order DFS
-
-        # BFS copied from leetcode 102 lvl order traversal: output is list of level lists
-        # e.g. [[1], [2,3]]
-
-        if not root:
-            return []
         
-        dq = deque([root]) # contains reference to node
-        bfs = [] # contains node values
-        while dq:
-            lvl = []
-            n = len(dq)
-            for i in range(n):
-                curr = dq.popleft()
-                lvl.append(curr.val)
+        res = []
 
-                if curr.left:
-                    dq.append(curr.left)
-                if curr.right:
-                    dq.append(curr.right) 
+        if not root: 
+            return res
 
-            bfs.append(lvl)
+        q = deque([root])
+
+        while q:
+            lvl_size = len(q)
+            for i in range(lvl_size):
+                node = q.popleft()
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+                if i == lvl_size - 1:
+                    res.append(node.val)
         
-       
-            
-        return [lvl[-1] for lvl in bfs]
+        return res
+
+        
