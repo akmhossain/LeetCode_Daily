@@ -22,11 +22,10 @@ class Solution:
 
             return res
 
-        dp = "1" # 11
+        RLE = "1" # 11
         for i in range(n-1):
-            RLE = getRLE(dp)
-            dp = RLE
+            RLE = getRLE(RLE)
         
-        return dp
+        return RLE
 
             
