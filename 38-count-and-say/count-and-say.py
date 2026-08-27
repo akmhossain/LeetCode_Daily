@@ -22,11 +22,11 @@ class Solution:
 
             return res
 
-        dp = ["1"] # 11
+        dp = "1" # 11
         for i in range(n-1):
-            RLE = getRLE(dp[i])
-            dp.append(RLE)
+            RLE = getRLE(dp)
+            dp = RLE
         
-        return dp[-1]
+        return dp
 
             
