@@ -8,11 +8,6 @@ class Solution:
         #     if seen[i] == 0:
         #         return i
 
-        missing = 0
-        while missing < len(nums):
-            if missing in nums:
-                missing += 1
-            else:
-                return missing
+        total = sum([i for i in (range(len(nums) + 1))])
+        return total - sum(nums)
         
-        return missing 
