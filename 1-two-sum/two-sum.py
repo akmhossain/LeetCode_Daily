@@ -5,12 +5,14 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
-        m = {}
+        # use hashmap for quick storage and lookup
+        # loop through list
+            # if the [target - curr val] is in h then return the indices of curr/val
         
-        for i,num in enumerate(nums):
-            if target - num in m:
-                return [i, m[target-nums[i]]]
-            m[num] = i
+        h = {} # store val:index pair
 
-        # 2 7 11 15, tar = 9
-        {2:0, 7:1}
+        for idx,val in enumerate(nums):
+            if target - val in h:
+                return [h[target-val],idx]
+            h[val] = idx
+
