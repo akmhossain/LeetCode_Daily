@@ -1,12 +1,13 @@
 class Solution:
     def maxProfit(self, prices: List[int]) -> int:
-        # buy low --> sell high
-        # at each update the minimum, res(max(res, curr-min)) 
+        # keep track of the global min at each iteration
+        # at each iteration update the result with curr - global minimum
 
-        min_price, res = prices[0], -1
+        global_min, res = prices[0], -1
 
         for i in prices:
-            min_price = min(i, min_price)
-            res = max(res, i - min_price) 
+            global_min = min(global_min, i)
+            res = max(res, i - global_min)
         
         return res
+
