@@ -12,25 +12,21 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         # implementation of BFS with deque
-        # queue up pointers to left and right of curr, process each following element in the queue the same way
         if not root:
             return []
 
-        dq = deque([root]) # contains reference to node
-        res = [] # contains node values
-        while dq:
-            lvl = []
-            n = len(dq)
-            for i in range(n):
-                curr = dq.popleft()
-                lvl.append(curr.val)
+        q = deque([root])
+        res = []
 
-                if curr.left:
-                    dq.append(curr.left)
-                if curr.right:
-                    dq.append(curr.right) 
-
-            res.append(lvl)
-            
+        while q:
+            curr = []
+            for _ in range(len(q)): # processing every element in level
+                node = q.popleft()
+                curr.append(node.val)
+                if node.left:
+                    q.append(node.left)
+                if node.right:
+                    q.append(node.right)
+            res.append(curr)
         
         return res
