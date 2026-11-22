@@ -1,36 +1,31 @@
-from collections import defaultdict
+from collections import defaultdict, deque
 class Solution:
     def canFinish(self, numCourses: int, prerequisites: List[List[int]]) -> bool:
-        # ways to represent a directed graph: adjacency matrix or dictionary
-        # given a constructed graph, return false if cycle detected
-        # dfs through the nodes, with three states
-        # if visited then no problem, if visiting node and comes back to a visting node (False)
+        # solve using topological sort
+        adj = defaultdict(list)
+        in_d = {v:0 for v in range(numCourses)} # indegree tracker
 
-        # build adjacency matrix: key is the node, value is the nodes it points to
-        course_graph = defaultdict(list)
-        for a,b in prerequisites: 
-            course_graph[b].append(a) 
-
-        # dfs to detect cycles
-        # unseen - 0, visiting - 1, visited - 2 
-        state = [0] * numCourses
-        def dfs(node): 
-            if state[node] != 0: 
-                return state[node] == 2
-
-            state[node] = 1
-
-            for nei in course_graph[node]:
-                if not dfs(nei):
-                    return False
-
-            state[node] = 2
-            return True
+        for u,v in prerequisites:
+            adj[u].append(v)
+            in_d[v] += 1
         
-        # actual loop to trigger dfs
-        for i in range(numCourses):
-            if not dfs(i):
-                return False
-        
-        # DFS did not find any cycles in graph
+        # start q with nodes without anything pointing to it
+        q = deque([v for v in range(numCourses) if in_d[v] == 0])
+        order = []
+    
+        while q:
+            u = q.popleft()
+            order.append(u)
+            
+            for v in adj[u]:
+                in_d[v] -= 1
+                if in_d[v] == 0:
+                    q.append(v)
+                    
+        # If order doesn't include all vertices, there is a cycle
+        if len(order) != numCourses:
+            return False
+            
         return True
+
+    # when theres a loop there will remain atleast one vertex whose indegree was more than one so it never got appended to order
